@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<project name="libthrift-tiny" default="dist" basedir=".">
+	<import file="${basedir}/build.xml" />
+	<property name="jar.tiny.file" location="${build.dir}/${final.name}-tiny.jar" />
+
+	<target name="dist" depends="compile">
+		<mkdir dir="${build.dir}/META-INF" />
+		<copy file="${thrift.root}/LICENSE" tofile="${build.dir}/META-INF/LICENSE.txt" />
+		<copy file="${thrift.root}/NOTICE" tofile="${build.dir}/META-INF/NOTICE.txt" />
+		<jar jarfile="${jar.tiny.file}">
+			<manifest>
+				<attribute name="Implementation-Version" value="${version}" />
+				<attribute name="Bundle-ManifestVersion" value="2" />
+				<attribute name="Bundle-SymbolicName" value="${thrift.groupid}" />
+				<attribute name="Bundle-Name" value="Apache Thrift" />
+				<attribute name="Bundle-Version" value="${version}" />
+				<attribute name="Bundle-Description" value="Apache Thrift library" />
+				<attribute name="Bundle-License" value="${license}" />
+				<attribute name="Bundle-ActivationPolicy" value="lazy" />
+				<attribute name="Export-Package" value="${thrift.groupid};version=${version}" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/apache/thrift/ShortStack.class" />
+				<include name="org/apache/thrift/TBase.class" />
+				<include name="org/apache/thrift/TBaseHelper.class" />
+				<include name="org/apache/thrift/TByteArrayOutputStream.class" />
+				<include name="org/apache/thrift/TEnum.class" />
+				<include name="org/apache/thrift/TException.class" />
+				<include name="org/apache/thrift/TFieldIdEnum.class" />
+				<include name="org/apache/thrift/TFieldRequirementType.class" />
+				<include name="org/apache/thrift/meta_data/*.class" />
+				<include name="org/apache/thrift/scheme/*.class" />
+				<include name="org/apache/thrift/protocol/TBase64Utils.class" />
+				<include name="org/apache/thrift/protocol/TBinaryProtocol.class" />
+				<include name="org/apache/thrift/protocol/TCompactProtocol.class" />
+				<include name="org/apache/thrift/protocol/TField.class" />
+				<include name="org/apache/thrift/protocol/TJSONProtocol.class" />
+				<include name="org/apache/thrift/protocol/TList.class" />
+				<include name="org/apache/thrift/protocol/TMap.class" />
+				<include name="org/apache/thrift/protocol/TMessage.class" />
+				<include name="org/apache/thrift/protocol/TProtocol.class" />
+				<include name="org/apache/thrift/protocol/TProtocolException.class" />
+				<include name="org/apache/thrift/protocol/TProtocolFactory.class" />
+				<include name="org/apache/thrift/protocol/TProtocolUtil.class" />
+				<include name="org/apache/thrift/protocol/TSet.class" />
+				<include name="org/apache/thrift/protocol/TStruct.class" />
+				<include name="org/apache/thrift/protocol/TTupleProtocol.class" />
+				<include name="org/apache/thrift/protocol/TType.class" />
+				<include name="org/apache/thrift/transport/AutoExpandingBuffer.class" />
+				<include name="org/apache/thrift/transport/AutoExpandingBufferWriteTransport.class" />
+				<include name="org/apache/thrift/transport/TIOStreamTransport.class" />
+				<include name="org/apache/thrift/transport/TMemoryInputTransport.class" />
+				<include name="org/apache/thrift/transport/TTransport.class" />
+				<include name="org/apache/thrift/transport/TTransportException.class" />
+				<include name="META-INF/*.txt" />
+			</fileset>
+		</jar>
+	</target>
+</project>
