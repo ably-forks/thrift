@@ -703,7 +703,7 @@ void t_js_generator::generate_js_struct_writer(ofstream& out,
   indent(out) << "output.writeStructBegin('" << name << "');" << endl;
 
   for (f_iter = fields.begin(); f_iter != fields.end(); ++f_iter) {
-    out << indent() << "if (this." << (*f_iter)->get_name() <<  " !== null && this." << (*f_iter)->get_name() << " !== undefined) {" << endl;
+    out << indent() << "if (this." << (*f_iter)->get_name() << " !== undefined) {" << endl;
     indent_up();
 
     indent(out) <<
@@ -1286,9 +1286,11 @@ void t_js_generator::generate_deserialize_field(ofstream &out,
       out << "readI32()";
     }
 
+/* unify output between node and js
     if (!gen_node_) {
         out << ".value";
     }
+*/
 
     out << ";" << endl;
   } else {
@@ -1686,26 +1688,26 @@ string t_js_generator::declare_field(t_field* tfield, bool init, bool obj) {
       case t_base_type::TYPE_I32:
       case t_base_type::TYPE_I64:
       case t_base_type::TYPE_DOUBLE:
-        result += " = null";
+        result += " = undefined";
         break;
       default:
         throw "compiler error: no JS initializer for base type " + t_base_type::t_base_name(tbase);
       }
     } else if (type->is_enum()) {
-      result += " = null";
+      result += " = undefined";
     } else if (type->is_map()){
-      result += " = null";
+      result += " = undefined";
     } else if (type->is_container()) {
-      result += " = null";
+      result += " = undefined";
     } else if (type->is_struct() || type->is_xception()) {
       if (obj) {
           result += " = new " +js_type_namespace(type->get_program()) + type->get_name() + "()";
       } else {
-        result += " = null";
+        result += " = undefined";
       }
     }
   } else {
-    result += " = null";
+    result += " = undefined";
   }
   return result;
 }
